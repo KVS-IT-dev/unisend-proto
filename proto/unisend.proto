@@ -1,0 +1,248 @@
+syntax = "proto3";
+
+import "google/protobuf/struct.proto";
+package unisend;
+
+
+message Filter {
+  optional uint32 page = 1;
+  optional int32 limit = 2;
+  repeated string types = 3;
+  repeated uint32 categories = 4;
+  optional uint32 userId = 5;
+  optional uint32 informing = 6;
+}
+
+//messages
+
+message MessageByIdDto {
+  uint32 id = 1;
+}
+
+message MessageByUserIdDto {
+  uint32 userId = 1;
+  optional uint32 categoryId = 2;
+  optional uint32 messageId = 3;
+}
+
+message MessageByInformingIdsDto {
+  repeated uint32 informingIds = 1;
+}
+
+message SubscribeDto {
+  repeated string tokens = 1;
+  string topic = 2;
+}
+
+message Recipient {
+  optional int32 id = 1;
+  repeated string tokens = 2;
+  repeated string emails = 3;
+  repeated string phones = 4;
+  repeated string topics = 5;
+}
+
+message MessageDto {
+  repeated string type = 1;
+  repeated Recipient recipients = 2;
+  string title = 3;
+  string body = 4;
+  optional uint32 categoryId = 5;
+  optional string categoryAlias = 6;
+  optional int32 senderId = 7;
+  optional bool special = 8;
+  optional Data data = 9;
+  optional uint32 informingId = 10;
+  optional bool hidePassword = 11;
+  optional string template = 12;
+  repeated string attachments = 13;
+  optional google.protobuf.Struct context = 14;
+}
+
+message Data {
+  optional string screen = 1;
+  optional string value = 2;
+  optional string status = 3;
+  optional string color = 4;
+  optional string buttonText = 5;
+  optional string taskCreated = 6;
+  optional string taskCustomer = 7;
+  optional string taskDescription = 8;
+  optional string taskType = 9;
+}
+
+message Message {
+  uint32 id = 1;
+  string title = 2;
+  string body = 3;
+  string image = 4;
+  string sentAt = 5;
+  bool isRead = 6;
+  bool special = 7;
+  Category category = 8;
+  Data data = 9;
+  optional string buttonText = 10;
+}
+
+message FullMessage {
+  uint32 id = 1;
+  string type = 2;
+  int32 senderId = 3;
+  int32 recipientId = 4;
+  string recipient = 5;
+  string title = 6;
+  string body = 7;
+  string image = 8;
+  string sentAt = 9;
+  bool isRead = 10;
+  bool success = 11;
+  bool special = 12;
+  uint32 informingId = 13;
+  Category category = 14;
+  Data data = 15;
+  optional string buttonText = 16;
+}
+
+message MessageListResponse {
+  repeated Message data = 1;
+}
+
+message SendResult {
+  string token = 1;
+  bool success = 2;
+}
+
+message SendResultResponse {
+  repeated SendResult data = 1;
+  string type = 2;
+}
+
+message FullMessageListResponse {
+  repeated FullMessage data = 1;
+  uint32 total = 2;
+  int32 limit = 3;
+  uint32 page = 4;
+}
+
+message MessageResponse {
+  FullMessage data = 1;
+}
+
+message CountResult {
+  uint32 total = 1;
+  uint32 read = 2;
+  uint32 informingId = 3;
+}
+
+message CountResponseList {
+  repeated CountResult data = 1;
+}
+
+message SubscribeResult {
+  uint32 success = 1;
+  uint32 failure = 2;
+}
+
+message SubscribeResponse {
+  SubscribeResult data = 1;
+}
+
+message StatusResponse {
+  uint32 data = 1;
+}
+
+//categories
+
+message Category {
+  uint32 id = 1;
+  string name = 2;
+  string description = 3;
+  string route = 4;
+  bool isReadOnly = 5;
+  uint32 index = 6;
+  optional string image = 7;
+  optional uint32 unread = 8;
+}
+
+
+message CategoryByUserIdDto {
+  optional uint32 userId = 1;
+}
+
+message CategoryFilterDto {
+  optional uint32 page = 1;
+  optional int32 limit = 2;
+  repeated string types = 3;
+  repeated uint32 categories = 4;
+  optional uint32 userId = 5;
+  optional uint32 informing = 6;
+}
+
+message CreateCategoryDto {
+  string name = 1;
+  optional string route = 2;
+  optional string description = 3;
+  optional bool isReadOnly = 4;
+  optional uint32 index = 5;
+  optional string image = 6;
+}
+
+message UpdateCategoryDto {
+  uint32 id = 1;
+  string name = 2;
+  optional string route = 3;
+  optional string description = 4;
+  optional uint32 index = 5;
+  optional string image = 6;
+
+}
+
+message UpdateCategoriesOrderDto {
+  repeated uint32 order = 7;
+}
+
+message CategoryByIdDto {
+  uint32 id = 1;
+}
+
+message CategoryResponse {
+  Category data = 1;
+}
+
+message ResultResponse {
+  uint32 data = 1;
+}
+
+message CategoriesListResponseWithMeta {
+  repeated Category data = 1;
+  optional uint32 total = 2;
+  optional int32 limit = 3;
+  optional uint32 page = 4;
+}
+
+message CategoriesListResponse {
+  repeated Category data = 1;
+}
+
+//services
+
+service UnisendService {
+  rpc FindAllMessages (Filter) returns (FullMessageListResponse) {}
+  rpc FindOneMessage (MessageByIdDto) returns (MessageResponse) {}
+
+  rpc SendMessages (MessageDto) returns (SendResultResponse) {}
+  rpc ReadMessages (MessageByUserIdDto) returns (MessageListResponse) {}
+
+  rpc CountUnreadByUser (MessageByUserIdDto) returns (StatusResponse) {}
+  rpc CountByInforming (MessageByInformingIdsDto) returns (CountResponseList) {}
+
+  rpc SubscribeToTopic (SubscribeDto) returns (SubscribeResponse) {}
+  rpc UnsubscribeFromTopic (SubscribeDto) returns (SubscribeResponse) {}
+
+  rpc CreateCategory (CreateCategoryDto) returns (CategoryResponse) {}
+  rpc DeleteCategory (CategoryByIdDto) returns (ResultResponse) {}
+  rpc FindCategories (CategoryFilterDto) returns (CategoriesListResponseWithMeta) {}
+  rpc FindCategoriesV2 (CategoryByUserIdDto) returns (CategoriesListResponse) {}
+  rpc UpdateCategory (UpdateCategoryDto) returns (CategoryResponse) {}
+  rpc UpdateCategoriesOrder (UpdateCategoriesOrderDto) returns (StatusResponse) {}
+}

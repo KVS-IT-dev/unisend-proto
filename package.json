@@ -1,0 +1,36 @@
+{
+  "name": "@kvs-it-dev/unisend-proto",
+  "version": "1.0.1",
+  "description": "proto types",
+  "license": "ISC",
+  "author": "kvs-it",
+  "type": "module",
+  "main": "dist/unisend.js",
+  "types": "dist/unisend.d.ts",
+  "files": [
+    "dist/",
+    "proto/**/*.proto"
+  ],
+  "scripts": {
+    "prepack": "npm run generate && npm run compile",
+    "generate": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=esModuleInterop=true,nestJs=true,importSuffix=.ts --ts_proto_out=./generated -I ./proto/ ./proto/*.proto",
+    "compile": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.0",
+    "ts-proto": "^2.11.2",
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KVS-IT-dev/unisend-proto.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "dependencies": {
+    "@nestjs/microservices": "^11.1.14",
+    "protobufjs": "^8.0.0",
+    "rxjs": "^7.8.2"
+  }
+}
