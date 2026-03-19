@@ -1,4 +1,4 @@
-# core-proto
+# unisend-proto
 
 ## Push to npm registry
 
