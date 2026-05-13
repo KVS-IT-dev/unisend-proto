@@ -3,6 +3,27 @@ syntax = "proto3";
 import "google/protobuf/struct.proto";
 package unisend;
 
+service UnisendService {
+  rpc FindAllMessages (Filter) returns (FullMessageListResponse) {}
+  rpc FindOneMessage (MessageByIdDto) returns (MessageResponse) {}
+  rpc FindByInforming (MessageByUserIdAndInformingIdDto) returns (MessageResponse) {}
+
+  rpc SendMessages (MessageDto) returns (SendResultResponse) {}
+  rpc ReadMessages (MessageByUserIdDto) returns (MessageListResponse) {}
+
+  rpc CountUnreadByUser (MessageByUserIdDto) returns (StatusResponse) {}
+  rpc CountByInforming (MessageByInformingIdsDto) returns (CountResponseList) {}
+
+  rpc SubscribeToTopic (SubscribeDto) returns (SubscribeResponse) {}
+  rpc UnsubscribeFromTopic (SubscribeDto) returns (SubscribeResponse) {}
+
+  rpc CreateCategory (CreateCategoryDto) returns (CategoryResponse) {}
+  rpc DeleteCategory (CategoryByIdDto) returns (ResultResponse) {}
+  rpc FindCategories (CategoryFilterDto) returns (CategoriesListResponseWithMeta) {}
+  rpc FindCategoriesV2 (CategoryByUserIdDto) returns (CategoriesListResponse) {}
+  rpc UpdateCategory (UpdateCategoryDto) returns (CategoryResponse) {}
+  rpc UpdateCategoriesOrder (UpdateCategoriesOrderDto) returns (StatusResponse) {}
+}
 
 message Filter {
   optional uint32 page = 1;
@@ -13,10 +34,13 @@ message Filter {
   optional uint32 informing = 6;
 }
 
-//messages
-
 message MessageByIdDto {
   uint32 id = 1;
+}
+
+message MessageByUserIdAndInformingIdDto {
+  uint32 userId = 1;
+  uint32 informingId = 2;
 }
 
 message MessageByUserIdDto {
@@ -152,7 +176,7 @@ message StatusResponse {
   uint32 data = 1;
 }
 
-//categories
+// ----------- categories -----------
 
 message Category {
   uint32 id = 1;
@@ -223,27 +247,4 @@ message CategoriesListResponseWithMeta {
 
 message CategoriesListResponse {
   repeated Category data = 1;
-}
-
-//services
-
-service UnisendService {
-  rpc FindAllMessages (Filter) returns (FullMessageListResponse) {}
-  rpc FindOneMessage (MessageByIdDto) returns (MessageResponse) {}
-
-  rpc SendMessages (MessageDto) returns (SendResultResponse) {}
-  rpc ReadMessages (MessageByUserIdDto) returns (MessageListResponse) {}
-
-  rpc CountUnreadByUser (MessageByUserIdDto) returns (StatusResponse) {}
-  rpc CountByInforming (MessageByInformingIdsDto) returns (CountResponseList) {}
-
-  rpc SubscribeToTopic (SubscribeDto) returns (SubscribeResponse) {}
-  rpc UnsubscribeFromTopic (SubscribeDto) returns (SubscribeResponse) {}
-
-  rpc CreateCategory (CreateCategoryDto) returns (CategoryResponse) {}
-  rpc DeleteCategory (CategoryByIdDto) returns (ResultResponse) {}
-  rpc FindCategories (CategoryFilterDto) returns (CategoriesListResponseWithMeta) {}
-  rpc FindCategoriesV2 (CategoryByUserIdDto) returns (CategoriesListResponse) {}
-  rpc UpdateCategory (UpdateCategoryDto) returns (CategoryResponse) {}
-  rpc UpdateCategoriesOrder (UpdateCategoriesOrderDto) returns (StatusResponse) {}
 }
