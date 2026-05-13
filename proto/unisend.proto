@@ -114,18 +114,17 @@ message FullMessage {
   string type = 2;
   int32 senderId = 3;
   int32 recipientId = 4;
-  string recipient = 5;
-  string title = 6;
-  string body = 7;
-  string image = 8;
-  string sentAt = 9;
-  bool isRead = 10;
-  bool success = 11;
-  bool special = 12;
-  uint32 informingId = 13;
-  Category category = 14;
-  Data data = 15;
-  optional string buttonText = 16;
+  string title = 5;
+  string body = 6;
+  string image = 7;
+  string sentAt = 8;
+  bool isRead = 9;
+  bool success = 10;
+  bool special = 11;
+  uint32 informingId = 12;
+  Category category = 13;
+  Data data = 14;
+  optional string buttonText = 15;
 }
 
 message MessageListResponse {
