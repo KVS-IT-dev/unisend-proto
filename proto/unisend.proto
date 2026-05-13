@@ -69,6 +69,7 @@ message Data {
   optional string taskCustomer = 7;
   optional string taskDescription = 8;
   optional string taskType = 9;
+  optional string link = 10;
 }
 
 message Message {
