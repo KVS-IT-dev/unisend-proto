@@ -185,9 +185,10 @@ message Category {
   bool isReadOnly = 5;
   uint32 index = 6;
   bool requiresAdsConsent = 7;
-  optional string alias = 8;
-  optional string image = 9;
-  optional uint32 unread = 10;
+  bool allowAllSend = 8;
+  optional string alias = 9;
+  optional string image = 10;
+  optional uint32 unread = 11;
 }
 
 
