@@ -184,8 +184,10 @@ message Category {
   string route = 4;
   bool isReadOnly = 5;
   uint32 index = 6;
-  optional string image = 7;
-  optional uint32 unread = 8;
+  bool requiresAdsConsent = 7;
+  optional string alias = 8;
+  optional string image = 9;
+  optional uint32 unread = 10;
 }
 
 
