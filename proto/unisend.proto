@@ -18,10 +18,12 @@ service UnisendService {
   rpc UnsubscribeFromTopic (SubscribeDto) returns (SubscribeResponse) {}
 
   rpc CreateCategory (CreateCategoryDto) returns (CategoryResponse) {}
+  rpc FindCategoryById (CategoryByIdDto) returns (CategoryResponse) {}
+  rpc UpdateCategory (UpdateCategoryDto) returns (CategoryResponse) {}
   rpc DeleteCategory (CategoryByIdDto) returns (ResultResponse) {}
+
   rpc FindCategories (CategoryFilterDto) returns (CategoriesListResponseWithMeta) {}
   rpc FindCategoriesV2 (CategoryByUserIdDto) returns (CategoriesListResponse) {}
-  rpc UpdateCategory (UpdateCategoryDto) returns (CategoryResponse) {}
   rpc UpdateCategoriesOrder (UpdateCategoriesOrderDto) returns (StatusResponse) {}
 }
 
