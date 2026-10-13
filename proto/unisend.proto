@@ -218,7 +218,7 @@ message CreateCategoryDto {
 
 message UpdateCategoryDto {
   uint32 id = 1;
-  string name = 2;
+  optional string name = 2;
   optional string route = 3;
   optional string description = 4;
   optional uint32 index = 5;
