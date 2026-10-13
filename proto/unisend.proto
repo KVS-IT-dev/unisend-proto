@@ -19,6 +19,7 @@ service UnisendService {
 
   rpc CreateCategory (CreateCategoryDto) returns (CategoryResponse) {}
   rpc FindCategoryById (CategoryByIdDto) returns (CategoryResponse) {}
+  rpc FindDefaultCategory (FindDefaultCategoryDto) returns (CategoryResponse) {}
   rpc UpdateCategory (UpdateCategoryDto) returns (CategoryResponse) {}
   rpc DeleteCategory (CategoryByIdDto) returns (ResultResponse) {}
 
@@ -233,6 +234,8 @@ message UpdateCategoriesOrderDto {
 message CategoryByIdDto {
   uint32 id = 1;
 }
+
+message FindDefaultCategoryDto {}
 
 message CategoryResponse {
   Category data = 1;
